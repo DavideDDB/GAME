@@ -37,7 +37,7 @@ public class Main {
             String colorePlayer = chiediColore();
             
             // Creare il Player usando la funzione creazionePlayer
-            Player player = creazionePlayer("Giocatore " + (i + 1) + ": " + nomePlayer, "Colore " + (i + 1) + ": " + colorePlayer, true, i + 1);
+            Player player = creazionePlayer("Giocatore " + (i + 1) + ": " + nomePlayer, "Colore: " + colorePlayer, true, i + 1);
             player.printInfoPlayer();
         }
 
@@ -76,8 +76,17 @@ public class Main {
         System.out.println("Inserisci nome player: ");
         Scanner sc = new Scanner(System.in);
         String nomePlayer = sc.next();
-            return nomePlayer;
+            return capitalizzaNome(nomePlayer);
     }
+
+    /////metodo per lettera maiuscola nome (non necessario)
+    public static String capitalizzaNome(String nome) {
+        if (nome == null || nome.isEmpty()) {
+            return nome;
+        }
+        return nome.substring(0, 1).toUpperCase() + nome.substring(1).toLowerCase();
+    }
+    /////
 
     public static String chiediColore(){
         Scanner sc = new Scanner(System.in);
@@ -86,13 +95,15 @@ public class Main {
             String coloreScelto = sc.next();
 
             //verifica che il colore sia valido (tra quelli disponibili)
-            if (coloriDisponibili.contains(coloreScelto)) {
-                //Rimuovo il colore scelto dalla lista (cosicche non sia più disponibile per gli altri player)
-                coloriDisponibili.remove(coloreScelto);
-                return coloreScelto;
-            }else{
-                System.out.println("Il colore scelto non è tra quelli proposti, riprova.");
+            for (String colore : coloriDisponibili) {
+                if (colore.equalsIgnoreCase(coloreScelto)) {
+                    //Rimuovo il colore scelto dalla lista (cosicche non sia più disponibile per gli altri player)
+                    coloriDisponibili.remove(colore);
+                    return colore; //ritorna il colore scelto
+                }
             }
+
+            System.out.println("Il colore scelto non è tra quelli proposti, riprova.");
             
             //for (String colore : coloriDisponibili) {
             //    if (colore.equalsIgnoreCase(coloreScelto)) {
