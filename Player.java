@@ -54,8 +54,8 @@ public class Player {
         }
 
         public void printInfoPlayer(){
-            System.out.println("Nome: "+ nome);
-            System.out.println("Colore: "+ colore);
+            System.out.println( nome);
+            System.out.println(colore);
             System.out.println("Status: "+ status);
             System.out.println("id: "+ id);
             

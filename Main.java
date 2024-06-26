@@ -1,36 +1,50 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     
-    private static final String [] coloriDisponibili = {"Giallo", "Verde", "Blu", "Rosso","Viola"};
+    //Lista dinamica di colori disponibili
+    private static List<String> coloriDisponibili = new ArrayList<>();
+
+    static {
+        //Inizzializzo i colori disponibili
+        coloriDisponibili.add("Giallo");
+        coloriDisponibili.add("Verde");
+        coloriDisponibili.add("Rosso");
+        coloriDisponibili.add("Viola");
+        coloriDisponibili.add("Blu");
+    }
+
+    ////Array con colori disponibili
+    //private static final String [] coloriDisponibili = {"Giallo", "Verde", "Blu", "Rosso","Viola"};
     
+
     public static void main(String[]args){
 
-        /////Creazione array mano(sposto in player)
-        /////int[] carteMano = {1, 2, 3, 4, 5};
-        /////int[] carteUsate = {};
-
-        //Array colori predefiniti
+        ////Creazione array mano(sposto in player)
+        ////int[] carteMano = {1, 2, 3, 4, 5};
+        ////int[] carteUsate = {};
 
         //chiedere numero giocatori
         int numeroPlayer = getNumPlayer();
 
         // ciclo per creare player
         for (int i = 0; i < numeroPlayer; i++) {
-            // Creare il Player usando la funzione creazionePlayer
-            //utilizzo funzione per chiedere il NOME (codice pulito)
+            //Utilizzo funzione per chiedere il NOME (codice pulito)
             String nomePlayer = chiediNome();
-            //utilizzo una funzione per chiedere il COLORE
+            //Utilizzo una funzione per chiedere il COLORE
             String colorePlayer = chiediColore();
             
-            Player player = creazionePlayer((i + 1) + ": " + nomePlayer, "Colore " + (i + 1) + ": " + colorePlayer, true, i + 1);
+            // Creare il Player usando la funzione creazionePlayer
+            Player player = creazionePlayer("Giocatore " + (i + 1) + ": " + nomePlayer, "Colore " + (i + 1) + ": " + colorePlayer, true, i + 1);
             player.printInfoPlayer();
         }
 
-        //Creare il Player
-        //Player player1 = new Player("Davide", "Giallo", true, 1);//   
-        //
-        //player1.printInfoPlayer();
+        ////Creare il Player
+        ////Player player1 = new Player("Davide", "Giallo", true, 1);//   
+        ////
+        ////player1.printInfoPlayer();
 
     }
     //FASI PARTITA:
@@ -68,17 +82,24 @@ public class Main {
     public static String chiediColore(){
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("Scegli un colore tra rosso, blu, verde, giallo, viola");
+            System.out.println("Scegli un colore tra " + coloriDisponibili.toString());
             String coloreScelto = sc.next();
 
-            //verifica che il colore sia valido
-            for (String colore : coloriDisponibili) {
-                if (colore.equalsIgnoreCase(coloreScelto)) {
-                    return colore; //restituiscei il colore controllato
-                }
+            //verifica che il colore sia valido (tra quelli disponibili)
+            if (coloriDisponibili.contains(coloreScelto)) {
+                //Rimuovo il colore scelto dalla lista (cosicche non sia più disponibile per gli altri player)
+                coloriDisponibili.remove(coloreScelto);
+                return coloreScelto;
+            }else{
+                System.out.println("Il colore scelto non è tra quelli proposti, riprova.");
             }
-
-            System.out.println("Il colore scelto non è tra quelli proposti, riprova.");
+            
+            //for (String colore : coloriDisponibili) {
+            //    if (colore.equalsIgnoreCase(coloreScelto)) {
+            //        return colore; //restituiscei il colore controllato
+            //    }
+            //}
+            //System.out.println("Il colore scelto non è tra quelli proposti, riprova.");
         }
 
     }
