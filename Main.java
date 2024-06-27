@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     
-    //Lista dinamica di colori disponibili
+    //Lista dinamica di colori disponibili(per far si che vengano tolti i colori già scelti)
     private static List<String> coloriDisponibili = new ArrayList<>();
 
     static {
@@ -29,16 +29,46 @@ public class Main {
         //chiedere numero giocatori
         int numeroPlayer = getNumPlayer();
 
+        //Lista di giocatori
+        List<Player> giocatori = new ArrayList<>();
+
+        //1//creare lista giocatori
+        //1//Player[] giocatori = new Player[numeroPlayer];
+
         // ciclo per creare player
         for (int i = 0; i < numeroPlayer; i++) {
             //Utilizzo funzione per chiedere il NOME (codice pulito)
             String nomePlayer = chiediNome();
             //Utilizzo una funzione per chiedere il COLORE
             String colorePlayer = chiediColore();
+
+            Player giocatore = creazionePlayer(nomePlayer, colorePlayer, true, i + 1);
             
+            //Creazione mazzo di carte per ogni giocatore
+            List<Carta> carteAssegnate = new ArrayList<>();
+            carteAssegnate.add(new Carta("Orso", 1));
+            carteAssegnate.add(new Carta("Lupo", 2));
+            carteAssegnate.add(new Carta("Lince", 3));
+            carteAssegnate.add(new Carta("Gufo", 4));
+            carteAssegnate.add(new Carta("Topo", 5));
+
+            //collego l'id del giocatore all'id delle carte
+            for (Carta carta : carteAssegnate){
+                carta.setIdCarta(giocatore.getId());
+            }
+
+            //impostare carte in mano per giocatore
+            giocatore.setCarteMano(carteAssegnate.toArray(new Carta[0]));
+
+            giocatori.add(giocatore);
+            giocatore.printInfoPlayer();
             // Creare il Player usando la funzione creazionePlayer
-            Player player = creazionePlayer("Giocatore " + (i + 1) + ": " + nomePlayer, "Colore: " + colorePlayer, true, i + 1);
-            player.printInfoPlayer();
+            
+            //Player player = creazionePlayer("Giocatore " + (i + 1) + ": " + nomePlayer, "Colore: " + colorePlayer, true, i + 1);
+            //player.printInfoPlayer();
+
+            //2//giocatori[i] = creazionePlayer(nomePlayer, colorePlayer, true, i+1);
+            //2//giocatori[i].printInfoPlayer();
         }
 
         ////Creare il Player
@@ -46,12 +76,29 @@ public class Main {
         ////
         ////player1.printInfoPlayer();
 
+        //Creazione mazzo di carte
+        //List<Carta> mazzo = creaMazzo();
+
+        //Assegnare le carte ai giocaotri
+        //assegnaCarteGiocatori(mazzo, giocatori);
+        //
+        //stampa carte dei giocatori
+        //for (Player giocatore : giocatori) {
+        //    System.out.println("Carte del" + giocatore.getNome() + ":" );
+        //    for (Carta carta : giocatore.getCarteMano()) {
+        //        System.out.println(carta);
+        //        
+        //    }
+        //    
+        //}
+
     }
     //FASI PARTITA:
     /*
      * 1. numero giocatori FATTO
-     * 2. registrazione giorcatori
-     * 3. iniziare gioco
+     * 2. registrazione giorcatori FATTO
+     * 3. creazione mazzo giocatori
+     * 4. iniziare gioco
      */
 
     public static int getNumPlayer(){
@@ -68,10 +115,12 @@ public class Main {
         }
     } 
 
+    //metodo per creare il giocatore
     public static Player creazionePlayer(String nome, String colore, boolean status, int id) {
         return new Player(nome, colore, status, id);
     }
-
+    
+    //metodo chiedere il nome
     public static String chiediNome(){
         System.out.println("Inserisci nome player: ");
         Scanner sc = new Scanner(System.in);
@@ -88,6 +137,7 @@ public class Main {
     }
     /////
 
+    //metodo per chiedere colore
     public static String chiediColore(){
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -114,5 +164,34 @@ public class Main {
         }
 
     }
+
+
+
+    //metodo per creare il mazzo
+    //public static List<Carta> creaMazzo(){
+    //    List<Carta> mazzo = new ArrayList<>();
+    //    String[] animali = {"Orso", "Lupo", "Lince", "Gufo", "Topo"};
+    //    int[] valori = {1,2,3,4,5};
+//
+    //    for (int i = 0; i < animali.length; i++){
+    //        mazzo.add(new Carta(animali[i], valori[i]));
+    //    }
+    //    return mazzo;
+    //}
+
+    //metodo per assegnare le carte ai giocatori
+    //public static void assegnaCarteGiocatori(List<Carta> mazzo, Player[] giocatori){
+    //    for (Player giocatore : giocatori) {
+    //        List<Carta> carteAssegnate = new ArrayList<>();
+    //        for (Carta carta : mazzo) {
+    //            if (carta.getIdGiocatore()== 0 ) { //se la carta non è ancora assegnata
+    //                carta.setIdGiocatore(giocatore.getId());
+    //                carteAssegnate.add(carta);
+    //            }
+//
+    //        }
+    //        giocatore.setCarteMano(carteAssegnate.toArray(new Carta[0]));
+    //    }
+    //}
 
 }
