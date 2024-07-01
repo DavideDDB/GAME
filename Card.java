@@ -12,9 +12,9 @@ public class Card {
         return playerId;
     }
 
-    public void setIdGiocatore(int id){
-        this.playerId = playerId;
-    }
+    //public void setIdGiocatore(int id){
+    //    this.playerId = playerId;
+    //}
     
     public int getValue(){
         return value;
