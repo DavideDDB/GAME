@@ -53,7 +53,7 @@ public class Card {
         }
     }
 
-
+// Metodo toString per una rappresentazione testuale dell'oggetto
 @Override
 public String toString(){
     return "Card{" +
